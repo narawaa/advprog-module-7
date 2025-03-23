@@ -67,18 +67,18 @@ You can install Postman via this website: https://www.postman.com/downloads/
   - [x] Commit: `Implement delete function in Subscriber repository.`
   - [x] Write answers of your learning module's "Reflection Publisher-1" questions in this README.
 - **STAGE 2: Implement services and controllers**
-  - [ ] Commit: `Create Notification service struct skeleton.`
-  - [ ] Commit: `Implement subscribe function in Notification service.`
-  - [ ] Commit: `Implement subscribe function in Notification controller.`
-  - [ ] Commit: `Implement unsubscribe function in Notification service.`
-  - [ ] Commit: `Implement unsubscribe function in Notification controller.`
-  - [ ] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
+  - [x] Commit: `Create Notification service struct skeleton.`
+  - [x] Commit: `Implement subscribe function in Notification service.`
+  - [x] Commit: `Implement subscribe function in Notification controller.`
+  - [x] Commit: `Implement unsubscribe function in Notification service.`
+  - [x] Commit: `Implement unsubscribe function in Notification controller.`
+  - [x] Write answers of your learning module's "Reflection Publisher-2" questions in this README.
 - **STAGE 3: Implement notification mechanism**
-  - [ ] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
-  - [ ] Commit: `Implement notify function in Notification service to notify each Subscriber.`
-  - [ ] Commit: `Implement publish function in Program service and Program controller.`
-  - [ ] Commit: `Edit Product service methods to call notify after create/delete.`
-  - [ ] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
+  - [x] Commit: `Implement update method in Subscriber model to send notification HTTP requests.`
+  - [x] Commit: `Implement notify function in Notification service to notify each Subscriber.`
+  - [x] Commit: `Implement publish function in Program service and Program controller.`
+  - [x] Commit: `Edit Product service methods to call notify after create/delete.`
+  - [x] Write answers of your learning module's "Reflection Publisher-3" questions in this README.
 
 ## Your Reflections
 
@@ -115,3 +115,15 @@ This is the place for you to write reflections:
    Postman sangat membantu saya dalam menguji API karena memungkinkan pengiriman request dengan mudah. Fitur seperti Collections untuk menyimpan request dan Environment Variables untuk konfigurasi sangat berguna.
 
 #### Reflection Publisher-3
+
+1. **Observer Pattern yang digunakan.**
+
+   Pola yang digunakan adalah Push Model dimana NotificationService secara otomatis mengirimkan notifikasi ke setiap subscriber segera setelah ada perubahan status produk (misalnya, "CREATED", "DELETED", "PROMOTION"). Data yang dikirim mencakup detail produk, status, dan informasi subscriber.
+
+2. **Keuntungan dan kerugian menggunakan Pull Model.**
+
+   Jika menggunakan Pull Model, subscriber akan secara aktif mengambil data dari publisher saat dibutuhkan, bukan menerima notifikasi langsung. Keuntungannya, subscriber memiliki kontrol lebih besar atas kapan dan bagaimana mereka mengambil data sehingga mengurangi beban sistem saat banyak subscriber. Kelemahannya, subscriber harus terus melakukan polling yang dapat meningkatkan latensi dan beban jaringan karena adanya request yang tidak perlu. Dalam kasus ini, Pull Model akan membuat sistem kurang responsif terhadap perubahan produk.
+
+3. **Dampak jika tidak menggunakan multi-threading dalam proses notifikasi.**
+
+   Tanpa multi-threading, notifikasi akan dikirim secara berurutan kepada setiap subscriber sehingga menyebabkan pemrosesan menjadi lambat terutama jika ada banyak subscriber. Ini dapat menyebabkan bottle-neck di server karena harus menunggu setiap notifikasi selesai sebelum melanjutkan ke yang berikutnya.
