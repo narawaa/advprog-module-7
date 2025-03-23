@@ -88,15 +88,30 @@ This is the place for you to write reflections:
 
 #### Reflection Publisher-1
 
-1. Apakah kita masih perlu trait dalam kasus BambangShop ini?
+1. **Apakah kita masih perlu trait dalam kasus BambangShop ini?**
+
    Dalam Observer, Subscriber biasanya berupa interface (trait dalam Rust) agar berbagai jenis subscriber bisa diimplementasikan dengan cara yang berbeda. Namun, dalam kasus ini, hanya ada satu model Subscriber sehingga penggunaan trait tidak diperlukan. Jika nantinya ada berbagai jenis subscriber dengan perilaku berbeda, maka trait bisa digunakan untuk fleksibilitas yang lebih baik.
 
-2. Apakah menggunakan Vec cukup atau DashMap diperlukan?
+2. **Apakah menggunakan Vec cukup atau DashMap diperlukan?**
+
    Id dalam Program dan url dalam Subscriber harus unik sehingga menggunakan Vec kurang efisien karena perlu pencarian berulang (O(n)) untuk memastikan keunikan. DashMap, yang berbasis HashMap, memungkinkan akses langsung (O(1)) sehingga lebih cepat dalam pencarian, penambahan, dan penghapusan subscriber, terutama jika jumlah data besar.
 
-3. Apakah kita masih perlu DashMap atau bisa pakai Singleton?
+3. **Apakah kita masih perlu DashMap atau bisa pakai Singleton?**
+
    Rust memerlukan thread safety, dan DashMap sudah menyediakan concurrent HashMap yang aman diakses dari banyak thread. Jika menggunakan Singleton biasa dengan HashMap, kita perlu menambahkan mekanisme thread safety seperti Mutex<HashMap>, yang bisa menyebabkan bottleneck. Oleh karena itu, penggunaan DashMap tetap lebih baik untuk performa yang optimal.
 
 #### Reflection Publisher-2
+
+1. **Mengapa perlu memisahkan Service dan Repository dari Model?**
+
+   Memisahkan Service dan Repository dari Model agar sesuai dengan prinsip Single Responsibility. Repository bertanggung jawab untuk mengelola akses data (misalnya membaca dan menulis ke database), sedangkan Service menangani logika bisnis. Ini membuat kode lebih terstruktur, mudah dipelihara, dan memungkinkan perubahan dalam penyimpanan data tanpa mengubah logika bisnis.
+
+2. **Apa yang terjadi jika hanya menggunakan Model?**
+
+   Jika semua logika bisnis dan akses data langsung diletakkan dalam Model, maka Model akan menjadi sulit dikelola. Interaksi antar Model seperti Program, Subscriber, dan Notification akan bercampur sehingga menyebabkan kode menjadi kompleks dan sulit diuji. Setiap perubahan dapat berdampak besar pada seluruh sistem, meningkatkan risiko bug dan kesalahan.
+
+3. **Bagaimana Postman membantu pengujian?**
+
+   Postman sangat membantu saya dalam menguji API karena memungkinkan pengiriman request dengan mudah. Fitur seperti Collections untuk menyimpan request dan Environment Variables untuk konfigurasi sangat berguna.
 
 #### Reflection Publisher-3
